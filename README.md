@@ -7,6 +7,7 @@ Authorized User entity is persisted to HSQLDB (memory) by default, but can be ch
 
 Following libraries are used in the project: spring, hibernate, c3p0, jetty, hsqldb
 
+Persistence (database) settings are located in /src/main/resources/jdbc.properties
 
 Running the sample web application
 ----------------------------------

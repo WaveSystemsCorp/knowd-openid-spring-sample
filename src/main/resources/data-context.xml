@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean id="jpaTemplate" class="org.springframework.orm.jpa.JpaTemplate">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref local="sessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" name="dataSource">
+        <property name="driverClass"                value="${jdbc.driver}"/>
+        <property name="jdbcUrl"                    value="${jdbc.url}"/>
+        <property name="user"                       value="${jdbc.user}"/>
+        <property name="password"                   value="${jdbc.password}"/>
+        <property name="acquireIncrement"           value="${jdbc.pool.acquireIncrement}"/>
+        <property name="initialPoolSize"            value="${jdbc.pool.initialPoolSize}"/>
+        <property name="minPoolSize"                value="${jdbc.pool.minPoolSize}"/>
+        <property name="maxPoolSize"                value="${jdbc.pool.maxPoolSize}"/>
+        <property name="idleConnectionTestPeriod"   value="${jdbc.pool.idleConnectionTestPeriod}" />
+        <property name="maxIdleTime"                value="${jdbc.pool.maxIdleTime}" />
+        <property name="maxConnectionAge"           value="${jdbc.pool.maxConnectionAge}" />
+    </bean>
+
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.query.substitutions">true 1, false 0</prop>
+                <prop key="hibernate.order_updates">true</prop>
+                <prop key="hibernate.c3p0.timeout">1</prop>
+                <prop key="hibernate.jdbc.use_scrollable_resultset">true</prop>
+                <prop key="hibernate.connection.isolation">2</prop>
+                <prop key="hibernate.connection.release_mode">on_close</prop>
+                <prop key="hibernate.default_batch_fetch_size">16</prop>
+                <prop key="hibernate.generate_statistics">false</prop>
+                <prop key="hibernate.jdbc.batch_size">30</prop>
+                <prop key="hibernate.connection.charSet">utf-8</prop>
+                <prop key="hibernate.connection.useUnicode">true</prop>
+                <prop key="hibernate.dialect">${jdbc.dialect}</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
+                <!-- Enable Hibernate's automatic session context management -->
+                <prop key="hibernate.current_session_context_class">thread</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql"        value="true" />
+                <property name="generateDdl"    value="true"/>
+            </bean>
+        </property>
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml"/>
+        <property name="persistenceUnitName"    value="DB_PERSISTENCE"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto"  >update</prop>
+                <prop key="hibernate.show_sql"      >true</prop>
+                <prop key="hibernate.format_sql"    >true</prop>
+                <prop key="hibernate.query.substitutions"   >true 1, false 0</prop>
+                <prop key="hibernate.connection.autocommit" >true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+</beans>
