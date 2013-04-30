@@ -13,7 +13,7 @@ Running the sample web application
 ----------------------------------
 This project is using maven to compile, package and run using jetty server.
 
-    cd open-spring-sample
+    cd knowd-openid-spring-sample
     mvn package
     mvn jetty:run
 
