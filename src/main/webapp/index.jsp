@@ -32,7 +32,7 @@
         <table>
             <tr>
                 <td>DeviceID</td>
-                <td><span class="label label-info openIdIdentifier">http://staging.machineid.com/device/id</span></td>
+                <td><span class="label label-info openIdIdentifier">https://id.wave.com/device/id</span></td>
             </tr>
             <tr>
                 <td>Google</td>
