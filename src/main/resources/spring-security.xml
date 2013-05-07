@@ -19,13 +19,13 @@
                 default-target-url="/secure/index.htm">
             <security:attribute-exchange>
                 <security:openid-attribute name="trustScore"
-                                           type="http://machineid.com/schema/trustScore"
+                                           type="http://schema.wave.com/endpoint/descriptor/trustScore"
                                            required="true"/>
                 <security:openid-attribute name="needsSetup"
-                                           type="http://machineid.com/schema/needsSetup"
+                                           type="http://schema.wave.com/endpoint/descriptor/needsSetup"
                                            required="false"/>
                 <security:openid-attribute name="setupURL"
-                                           type="http://machineid.com/schema/setupURL"
+                                           type="http://schema.wave.com/endpoint/descriptor/setupURL"
                                            required="false"/>
             </security:attribute-exchange>
         </security:openid-login>
