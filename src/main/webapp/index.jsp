@@ -22,8 +22,9 @@
     <div class="form-signin">
 
         <form action="<c:url value="/j_spring_openid_security_check" />" method="post" >
-            <input type="text" name="openid_identifier" id="openid_identifier" class="input-block-level" placeholder="OpenID Login / OpenID Identifier"
-                   value="">
+            <input type="text" name="openid_identifier" id="openid_identifier" class="input-block-level"
+                   placeholder="OpenID Login / OpenID Identifier"
+                   value="https://id.wave.com/device/id">
             <button class="btn btn-large">Sign with OpenID</button>
             <img src="<c:url value="/images/logo_openid.png" />" style="height: 40px" alt="openid logo" />
         </form>
